@@ -1,10 +1,9 @@
 <template>
   <div class="popular">
     <h2 class="title-pp">Popular products</h2>
-
     <b-container fluid>
-      <b-row cols="6" cols-lg="3">
-        <b-col>
+      <b-row>
+        <b-col cols="4" v-for="item in data" :key="item.productId">
           <article>
             <b-card no-body>
               <div class="action">
@@ -19,136 +18,13 @@
                   </a>
                 </span>
               </div>
-              <b-card-img src="@/assets/product-10.jpg"></b-card-img>
-              <b-card-title>Anna</b-card-title>
+              <b-card-img
+                :src="'/api/product/viewProductImage/' + item.homeImage"
+              ></b-card-img>
+              <b-card-title>{{ item.productName }}</b-card-title>
               <b-card-text>
-                <sub>$ 159.-</sub>
-                <sup>$ 139.-</sup>
-              </b-card-text>
-              <b-button><b-icon icon="cart3"></b-icon></b-button>
-            </b-card>
-          </article>
-        </b-col>
-        <b-col>
-          <article>
-            <b-card no-body>
-              <div class="action">
-                <span>
-                  <a class="added-heart" href="javascript:void(0);">
-                    <b-icon icon="heart"></b-icon>
-                  </a>
-                </span>
-                <span>
-                  <a href="javascript:void(0);">
-                    <b-icon icon="eye"></b-icon>
-                  </a>
-                </span>
-              </div>
-              <b-card-img src="@/assets/product-9.jpg"></b-card-img>
-              <b-card-title>Lucy</b-card-title>
-              <b-card-text>
-                <sub>$ 319.-</sub>
-                <sup>$ 219.-</sup>
-              </b-card-text>
-              <b-button><b-icon icon="cart3"></b-icon></b-button>
-            </b-card>
-          </article>
-        </b-col>
-        <b-col>
-          <article>
-            <b-card no-body>
-              <div class="action">
-                <span>
-                  <a class="added-heart" href="javascript:void(0);">
-                    <b-icon icon="heart"></b-icon>
-                  </a>
-                </span>
-                <span>
-                  <a href="javascript:void(0);">
-                    <b-icon icon="eye"></b-icon>
-                  </a>
-                </span>
-              </div>
-              <b-card-img src="@/assets/product-8.jpg"></b-card-img>
-              <b-card-title>Ella</b-card-title>
-              <b-card-text>
-                <sub>$ 899.-</sub>
-                <sup>$ 750.-</sup>
-              </b-card-text>
-              <b-button><b-icon icon="cart3"></b-icon></b-button>
-            </b-card>
-          </article>
-        </b-col>
-        <b-col>
-          <article>
-            <b-card no-body>
-              <div class="action">
-                <span>
-                  <a class="added-heart" href="javascript:void(0);">
-                    <b-icon icon="heart"></b-icon>
-                  </a>
-                </span>
-                <span>
-                  <a href="javascript:void(0);">
-                    <b-icon icon="eye"></b-icon>
-                  </a>
-                </span>
-              </div>
-              <b-card-img src="@/assets/product-7.jpg"></b-card-img>
-              <b-card-title>Anna</b-card-title>
-              <b-card-text>
-                <sub>$ 159.-</sub>
-                <sup>$ 139.-</sup>
-              </b-card-text>
-              <b-button><b-icon icon="cart3"></b-icon></b-button>
-            </b-card>
-          </article>
-        </b-col>
-        <b-col>
-          <article>
-            <b-card no-body>
-              <div class="action">
-                <span>
-                  <a class="added-heart" href="javascript:void(0);">
-                    <b-icon icon="heart"></b-icon>
-                  </a>
-                </span>
-                <span>
-                  <a href="javascript:void(0);">
-                    <b-icon icon="eye"></b-icon>
-                  </a>
-                </span>
-              </div>
-              <b-card-img src="@/assets/product-6.jpg"></b-card-img>
-              <b-card-title>Anna</b-card-title>
-              <b-card-text>
-                <sub>$ 159.-</sub>
-                <sup>$ 139.-</sup>
-              </b-card-text>
-              <b-button><b-icon icon="cart3"></b-icon></b-button>
-            </b-card>
-          </article>
-        </b-col>
-        <b-col>
-          <article>
-            <b-card no-body>
-              <div class="action">
-                <span>
-                  <a class="added-heart" href="javascript:void(0);">
-                    <b-icon icon="heart"></b-icon>
-                  </a>
-                </span>
-                <span>
-                  <a href="javascript:void(0);">
-                    <b-icon icon="eye"></b-icon>
-                  </a>
-                </span>
-              </div>
-              <b-card-img src="@/assets/product-5.jpg"></b-card-img>
-              <b-card-title>Anna</b-card-title>
-              <b-card-text>
-                <sub>$ 159.-</sub>
-                <sup>$ 139.-</sup>
+                <sub>$ {{ item.productPrice }}</sub>
+                <sup>$ {{ item.productFPrice }}</sup>
               </b-card-text>
               <b-button><b-icon icon="cart3"></b-icon></b-button>
             </b-card>
@@ -162,8 +38,31 @@
 <script>
 export default {
   name: "HomePopular",
+  data() {
+    return {
+      queryForm: {
+        current: 1,
+        total: 0,
+        size: 6,
+      },
+      data: [],
+    };
+  },
+  created() {
+    this.queryProduct();
+  },
   methods: {
     queryProduct() {
+      this.$getRequest("/product/queryProductList", this.queryForm).then(
+        (res) => {
+          this.data = res.data.result.records;
+        }
+      );
+    },
+    /**
+     * @description 添加购物车
+     */
+    addCart() {
       
     }
   },
@@ -215,7 +114,7 @@ article {
       font-weight: 300;
     }
     .btn {
-      background: #3c5570;
+      background: #e4e25f;
       position: absolute;
       overflow: hidden;
       color: white;
@@ -254,7 +153,7 @@ article {
         position: relative;
         display: inline-block;
         padding: 0 5px;
-        background-color: dimgray;
+        background-color: #e4e25f;
         color: white;
         text-align: center;
         border-radius: 50%;
@@ -263,8 +162,12 @@ article {
         line-height: 38px;
         margin-bottom: 5px;
       }
+      a.added-heart:hover {
+        background-color: #d30707;
+        color: white;
+      }
       a:hover {
-        background-color: #000000;
+        background-color: #0967e2;
         color: white;
       }
     }

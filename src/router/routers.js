@@ -4,6 +4,11 @@ export default [{
     component: () => import('@/views/home/Home.vue')
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/login/Login.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
