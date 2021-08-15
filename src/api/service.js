@@ -1,5 +1,9 @@
+import Vue from 'vue'
 import axios from 'axios'
 import store from '@/store'
+import {
+  ToastPlugin
+} from 'bootstrap-vue'
 
 const service = axios.create({
   baseURL: '',
@@ -19,6 +23,14 @@ service.interceptors.response.use(response => {
 
   } else if (code === '0') {
     return response
+  } else {
+    const vm = new Vue()
+    let msg = response.data.msg
+    vm.$bvToast.toast(`${msg}`, {
+      title: '提示',
+      variant: 'danger',
+      autoHideDelay: 3000
+    })
   }
 })
 

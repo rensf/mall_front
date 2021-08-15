@@ -93,9 +93,13 @@ export default {
     },
     login() {
       if (this.nameState && this.passState) {
-        this.$getRequest("/user/loginByNormal", this.loginForm).then(
-          (res) => {}
-        );
+        this.$getRequest("/user/loginByNormal", this.loginForm).then((res) => {
+          this.$bvToast.toast(`登录成功`, {
+            title: "提示",
+            variant: "success",
+            autoHideDelay: 3000,
+          });
+        });
       }
     },
   },
