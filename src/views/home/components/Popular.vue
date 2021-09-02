@@ -24,7 +24,7 @@
               <b-card-title>{{ item.productName }}</b-card-title>
               <b-card-text>
                 <sub>$ {{ item.productPrice }}</sub>
-                <sup>$ {{ item.productFPrice }}</sup>
+                <sup>$ {{ item.productDiscountPrice }}</sup>
               </b-card-text>
               <b-button><b-icon icon="cart3"></b-icon></b-button>
             </b-card>
