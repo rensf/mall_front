@@ -19,7 +19,7 @@
                 </span>
               </div>
               <b-card-img
-                :src="'/api/product/viewProductImage/' + item.homeImage"
+                :src="'/api/product/product/viewProductImage/' + item.homeImage"
               ></b-card-img>
               <b-card-title>{{ item.productName }}</b-card-title>
               <b-card-text>
@@ -53,7 +53,9 @@ export default {
   },
   methods: {
     queryProduct() {
-      this.$getRequest("/product/queryProductList", this.queryForm).then(
+      // 查询首推产品
+      this.queryForm.productFirst = 1;
+      this.$getRequest("/product/product/queryProductList", this.queryForm).then(
         (res) => {
           this.data = res.data.result.records;
         }
@@ -163,11 +165,11 @@ article {
         margin-bottom: 5px;
       }
       a.added-heart:hover {
-        background-color: #d30707;
+        background-color: #ff67ca;
         color: white;
       }
       a:hover {
-        background-color: #0967e2;
+        background-color: #32bcf7;
         color: white;
       }
     }

@@ -11,8 +11,11 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => {
-  if (store.state.token)
-    config.headers.token = store.state.token
+  if (store.state.token) {
+    config.headers.Authorization = store.state.token
+  } else {
+    config.headers.Authorization = "Basic bWFsbC13ZWI6MTIzNDU2" // base64明文：mall-web:123456
+  }
   return config
 })
 
