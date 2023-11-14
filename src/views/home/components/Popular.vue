@@ -12,21 +12,23 @@
                     <b-icon icon="heart"></b-icon>
                   </a>
                 </span>
-                <span>
-                  <a href="javascript:void(0);">
-                    <b-icon icon="eye"></b-icon>
-                  </a>
-                </span>
               </div>
-              <b-card-img
-                :src="'/api/product/product/viewProductImage/' + item.homeImage"
-              ></b-card-img>
+              <auth-img
+                :authSrc="
+                  '/api/product/product/viewProductImage/' + item.homeImage
+                "
+              ></auth-img>
               <b-card-title>{{ item.productName }}</b-card-title>
               <b-card-text>
-                <sub>$ {{ item.productPrice }}</sub>
-                <sup>$ {{ item.productDiscountPrice }}</sup>
+                <div v-if="item.productDiscountPrice">
+                  <sub>$ {{ item.productPrice }}</sub>
+                  <sup>$ {{ item.productDiscountPrice }}</sup>
+                </div>
+                <div v-else>
+                  <sup>$ {{ item.productPrice }}</sup>
+                </div>
               </b-card-text>
-              <b-button><b-icon icon="cart3"></b-icon></b-button>
+              <b-button @click="addCart(item)"><b-icon icon="cart3"></b-icon></b-button>
             </b-card>
           </article>
         </b-col>
@@ -36,8 +38,12 @@
 </template>
 
 <script>
+import AuthImg from '_c/auth-img';
 export default {
-  name: "HomePopular",
+  name: 'HomePopular',
+  components: {
+    AuthImg,
+  },
   data() {
     return {
       queryForm: {
@@ -55,18 +61,29 @@ export default {
     queryProduct() {
       // 查询首推产品
       this.queryForm.productFirst = 1;
-      this.$getRequest("/product/product/queryProductList", this.queryForm).then(
-        (res) => {
-          this.data = res.data.result.records;
-        }
-      );
+      this.$getRequest(
+        '/product/product/queryProductList',
+        this.queryForm
+      ).then((res) => {
+        this.data = res.data.result.records;
+      });
     },
-    /**
-     * @description 添加购物车
-     */
-    addCart() {
-      
-    }
+    // 添加购物车
+    addCart(item) {
+      let addCartForm = {
+        productId: item.productId,
+        userId: this.$store.state.user.userId
+      }
+      this.$postRequest('/user/cart/addCart', addCartForm).then(res => {
+        if (res.data.result) {
+          this.$bvToast.toast(item.productName + `已成功添加至购物车`, {
+            title: '提示',
+            variant: 'success',
+            autoHideDelay: 3000,
+          });
+        }
+      })
+    },
   },
 };
 </script>

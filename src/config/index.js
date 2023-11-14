@@ -16,6 +16,10 @@ export default {
   /**
    * @description 默认打开的首页的路由name值，默认为home
    */
-  homeName: 'home',
+  homeName: 'Home',
+  /**
+   * @description 登录页面name值，默认为login
+   */
+  loginName: 'Login',
   productionTip: false,
 }

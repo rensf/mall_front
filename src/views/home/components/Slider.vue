@@ -118,7 +118,7 @@ export default {
 
 <style lang="less" scoped>
 .slide-image {
-  height: ~"calc(100vh - 40px)";
+  height: ~"calc(100vh - 80px)";
   width: 100%;
   border-radius: 20px;
 }

@@ -1,40 +1,57 @@
-import Vue from 'vue'
-import axios from 'axios'
-import store from '@/store'
-import {
-  ToastPlugin
-} from 'bootstrap-vue'
+import Vue from 'vue';
+import axios from 'axios';
+import store from '@/store';
+import router from '@/router';
+import config from '@/config';
+const { loginName } = config;
 
 const service = axios.create({
   baseURL: '',
   timeout: 0,
-})
+});
 
-service.interceptors.request.use(config => {
-  if (store.state.token) {
-    config.headers.Authorization = store.state.token
+service.interceptors.request.use((config) => {
+  if (store.state.user.token) {
+    config.headers.Authorization = store.state.user.token;
   } else {
-    config.headers.Authorization = "Basic bWFsbC13ZWI6MTIzNDU2" // base64明文：mall-web:123456
+    config.headers.Authorization = 'Basic bWFsbC13ZWI6MTIzNDU2'; // base64明文：mall-web:123456
   }
-  return config
-})
+  return config;
+});
 
-service.interceptors.response.use(response => {
-  console.log(response)
-  let code = response.data.code
-  if (code === null) {
-
-  } else if (code === '0') {
-    return response
-  } else {
-    const vm = new Vue()
-    let msg = response.data.msg
-    vm.$bvToast.toast(`${msg}`, {
-      title: '提示',
-      variant: 'danger',
-      autoHideDelay: 3000
-    })
+service.interceptors.response.use(
+  (response) => {
+    console.log('返回', response);
+    let code = response.data.code;
+    if (code === null) {
+    } else if (code === '0') {
+      return response;
+    } else {
+      const vm = new Vue();
+      let msg = response.msg;
+      vm.$bvToast.toast(`${msg}`, {
+        title: '提示',
+        variant: 'danger',
+        autoHideDelay: 3000,
+      });
+    }
+  },
+  (error) => {
+    const res = (error.response || {}).data || {};
+    if (res && res.code && res.code === '10002') {
+      const vm = new Vue();
+      let msg = res.msg;
+      vm.$bvToast.toast(`${msg}`, {
+        title: '提示',
+        variant: 'danger',
+        autoHideDelay: 3000,
+      });
+      store.commit('removeToken');
+      router.push({
+        name: loginName,
+      });
+    }
   }
-})
+);
 
-export default service
+export default service;

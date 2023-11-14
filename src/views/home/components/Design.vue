@@ -8,7 +8,7 @@
             <b-card no-body>
               <b-card-img src="@/assets/product-1.jpg"></b-card-img>
               <b-card-title>
-                Home Organizers that Add Color to Your Space
+                Home organizers that add color to space
               </b-card-title>
               <b-card-text>2019/08/12</b-card-text>
             </b-card>
