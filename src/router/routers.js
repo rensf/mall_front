@@ -1,19 +1,34 @@
-export default [{
+export default [
+  {
     path: '/',
-    name: 'Home',
-    component: () => import('@/views/home/Home.vue')
+    name: 'Main',
+    component: () => import('@/views/main/Main.vue'),
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/home/Home.vue'),
+      },
+      {
+        path: '/product',
+        name: 'Product',
+        component: () => import('@/views/product/Product.vue'),
+      },
+      {
+        path: '/productDetail',
+        name: 'ProductDetail',
+        component: () => import('@/views/product/ProductDetail.vue'),
+      },
+      {
+        path: '/order',
+        name: 'Order',
+        component: () => import('@/views/order/Order.vue'),
+      },
+    ],
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/Login.vue')
+    component: () => import('@/views/login/Login.vue'),
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+];

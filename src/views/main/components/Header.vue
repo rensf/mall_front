@@ -1,6 +1,6 @@
 <template>
   <b-navbar>
-    <b-navbar-brand><h2>Mall</h2></b-navbar-brand>
+    <b-navbar-brand><h2 @click="$router.push('/home')">Mall</h2></b-navbar-brand>
     <b-navbar-nav class="ml-auto">
       <b-nav-item>
         <b-icon
@@ -72,6 +72,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.navbar {
+  padding-right: unset;
+}
+.navbar-brand {
+  cursor: pointer;
+}
 .navbar-icon {
   margin-left: 15px;
 }

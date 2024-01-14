@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <home-header></home-header>
     <home-slider></home-slider>
     <home-feature></home-feature>
     <home-popular></home-popular>
@@ -11,17 +10,15 @@
 </template>
 
 <script>
-import HomeHeader from "./components/Header";
-import HomeSlider from "./components/Slider";
-import HomeFeature from "./components/Feature";
-import HomePopular from "./components/Popular";
-import HomeInspiration from "./components/Inspiration";
-import HomeDesign from "./components/Design";
-import HomeEmail from "./components/Email";
+import HomeSlider from './components/Slider';
+import HomeFeature from './components/Feature';
+import HomePopular from './components/Popular';
+import HomeInspiration from './components/Inspiration';
+import HomeDesign from './components/Design';
+import HomeEmail from './components/Email';
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
-    HomeHeader,
     HomeSlider,
     HomeFeature,
     HomePopular,
@@ -33,13 +30,8 @@ export default {
     return {};
   },
   created() {},
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
-<style lang="less" scoped>
-.home {
-  margin: 0 50px;
-}
-</style>
+<style lang="less" scoped></style>

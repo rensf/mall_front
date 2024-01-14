@@ -1,23 +1,18 @@
 <template>
   <div class="product">
-    <div class="product-header">
-      <h2>Product Grid</h2>
-    </div>
-    <div class="center">
-      
-    </div>
-    <div class="footer">
-
-    </div>
+    <product-list></product-list>
   </div>
 </template>
 
 <script>
+import ProductList from './components/ProductList';
 export default {
-
-}
+  name: 'Product',
+  components: {
+    ProductList,
+  },
+};
 </script>
 
-<style>
-
+<style lang="less" scoped>
 </style>

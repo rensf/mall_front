@@ -1,6 +1,6 @@
 <template>
   <div class="popular">
-    <h2 class="title-pp">Popular products</h2>
+    <h2 class="title-pp" @click="$router.push('/product')">Popular products</h2>
     <b-container fluid>
       <b-row>
         <b-col cols="4" v-for="item in data" :key="item.productId">
@@ -19,7 +19,7 @@
                 "
               ></auth-img>
               <b-card-title>{{ item.productName }}</b-card-title>
-              <b-card-text>
+              <b-card-sub-title>
                 <div v-if="item.productDiscountPrice">
                   <sub>$ {{ item.productPrice }}</sub>
                   <sup>$ {{ item.productDiscountPrice }}</sup>
@@ -27,8 +27,10 @@
                 <div v-else>
                   <sup>$ {{ item.productPrice }}</sup>
                 </div>
-              </b-card-text>
-              <b-button @click="addCart(item)"><b-icon icon="cart3"></b-icon></b-button>
+              </b-card-sub-title>
+              <b-button @click="addCart(item)"
+                ><b-icon icon="cart3"></b-icon
+              ></b-button>
             </b-card>
           </article>
         </b-col>
@@ -72,9 +74,9 @@ export default {
     addCart(item) {
       let addCartForm = {
         productId: item.productId,
-        userId: this.$store.state.user.userId
-      }
-      this.$postRequest('/user/cart/addCart', addCartForm).then(res => {
+        userId: this.$store.state.user.userId,
+      };
+      this.$postRequest('/user/cart/addCart', addCartForm).then((res) => {
         if (res.data.result) {
           this.$bvToast.toast(item.productName + `已成功添加至购物车`, {
             title: '提示',
@@ -82,7 +84,7 @@ export default {
             autoHideDelay: 3000,
           });
         }
-      })
+      });
     },
   },
 };
@@ -94,6 +96,7 @@ export default {
 }
 .title-pp {
   margin: 30px;
+  cursor: pointer;
 }
 article {
   position: relative;
@@ -117,18 +120,18 @@ article {
     .card-title {
       padding: 20px 20px 0 20px;
     }
-    .card-text {
+    .card-subtitle {
       width: 100%;
       padding: 0 20px 20px 20px;
     }
-    .card-text sub,
-    .card-text sup {
+    .card-subtitle sub,
+    .card-subtitle sup {
       bottom: auto;
       top: auto;
       display: inline-block;
       margin-right: 10px;
     }
-    .card-text sub {
+    .card-subtitle sub {
       text-decoration: line-through;
       font-weight: 300;
     }
@@ -137,7 +140,7 @@ article {
       position: absolute;
       overflow: hidden;
       color: white;
-      bottom: 35px;
+      bottom: 20px;
       right: 20px;
       border: 0;
       width: 60px;

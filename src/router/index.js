@@ -14,6 +14,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log(to);
   const token = getToken()
   if (!token && to.name === loginName) {
     next()

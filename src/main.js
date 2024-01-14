@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import animated from 'animate.css'
 import VueTilt from 'vue-tilt.js'
+import './index.less'
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
