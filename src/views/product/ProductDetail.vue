@@ -4,23 +4,28 @@
       <b-row align-h="center">
         <b-col cols="4">
           <div class="product-detail-title">
-            <h2>Mellany Sofa</h2>
-          </div>
-          <div class="product-detail-price">
-            <span>
-              $ 1999,00
-              <small>$ 2999,00</small>
-            </span>
+            <h2>{{ productDetail.productName }}</h2>
           </div>
           <hr />
           <div class="product-detail-info-box">
-            <span><strong>Maifacturer</strong></span>
-            <span>Brand Name</span>
+            <span><strong>Price</strong></span>
+            <span class="product-detail-price">
+              <span v-if="productDetail.productDiscountPrice">
+                $ {{ productDetail.productDiscountPrice }}
+                <small>$ {{ productDetail.productPrice }}</small>
+              </span>
+              <span v-else>$ {{ productDetail.productPrice }}</span>
+            </span>
           </div>
           <hr />
           <div class="product-detail-info-box">
             <span><strong>Materials</strong></span>
             <span>Wood, Leather, Acrylic</span>
+          </div>
+          <hr />
+          <div class="product-detail-info-box">
+            <span><strong>Model</strong></span>
+            <span>{{ productDetail.productModel }}</span>
           </div>
           <hr />
           <div class="product-detail-info-box">
@@ -38,7 +43,9 @@
             <span>
               <b-row>
                 <b-col cols="6">
-                  <b-input type="number"></b-input>
+                  <b-input-group :append="productDetail.productUnit">
+                    <b-input type="number"></b-input>
+                  </b-input-group>
                 </b-col>
               </b-row>
             </span>
@@ -49,11 +56,21 @@
             <b-button variant="warning">Add Cart</b-button>
           </div>
         </b-col>
-        <b-col cols="6">
-          <b-carousel fade controls img-width="730" img-height="530">
-            <b-carousel-slide img-src="@/assets/product-8.jpg">
-            </b-carousel-slide>
-            <b-carousel-slide img-src="@/assets/product-10.jpg">
+        <b-col cols="5">
+          <b-carousel
+            fade
+            controls
+            background="#ababab"
+            img-width="500"
+            img-height="500"
+          >
+            <b-carousel-slide v-for="(item, index) in imageList" :key="index">
+              <template #img>
+                <auth-img
+                  class="product-detail-img"
+                  :authSrc="'/api/product/product/viewProductImage/' + item"
+                ></auth-img>
+              </template>
             </b-carousel-slide>
           </b-carousel>
         </b-col>
@@ -65,34 +82,42 @@
 <script>
 import ColorPicker from '_c/color-picker';
 import SizePicker from '_c/size-picker';
+import AuthImg from '_c/auth-img';
 export default {
   name: 'ProductDetail',
   components: {
     ColorPicker,
     SizePicker,
+    AuthImg,
+  },
+  data() {
+    return {
+      productDetail: {},
+      imageList: [],
+    };
   },
   created() {
-    console.log('产品ID', this.$route.params);
+    this.queryProductDetail();
   },
   methods: {
     queryProductDetail() {
-      this.$getRequest('/product/product/queryProductById', {product: this.$route.params.productId}).then(res => {
-        
-      })
+      this.$getRequest('/product/product/queryProductById', {
+        productId: this.$route.query.productId,
+      }).then((res) => {
+        this.productDetail = res.data.result;
+        this.imageList = res.data.result.image.split(',');
+      });
     },
     addOrder() {
-      this.$router.push('./order')
-    }
-  }
+      this.$router.push('./order');
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .product-detail {
   margin-top: 20px;
-  .product-detail-price {
-    font-size: 20px;
-  }
   .product-detail-price small {
     text-decoration: line-through;
     font-size: 80%;
@@ -108,7 +133,7 @@ export default {
     display: table-cell;
     vertical-align: middle;
     text-align: left;
-    font-size: 13px;
+    font-size: 15px;
   }
   .product-detail-info-box > span:first-child {
     width: 35%;

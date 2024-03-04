@@ -1,39 +1,38 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import routes from './routers'
-import store from '@/store'
-import { getToken } from '@/libs/util'
-import config from '@/config'
-const { homeName, loginName } = config
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import routes from './routers';
+import store from '@/store';
+import { getToken } from '@/libs/util';
+import config from '@/config';
+const { homeName, loginName } = config;
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
-  routes
-})
+  routes,
+});
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  const token = getToken()
+  const token = getToken();
   if (!token && to.name === loginName) {
-    next()
+    next();
   } else if (!token && to.name !== loginName) {
     next({
-      name: loginName
-    })
+      name: loginName,
+    });
   } else if (token && to.name === loginName) {
     next({
-      name: homeName
-    })
+      name: homeName,
+    });
   } else if (token && to.name !== loginName) {
-    store.dispatch('getUserInfo')
-    next()
+    store.dispatch('getUserInfo');
+    next();
   }
-})
+});
 
-router.afterEach(to => {
-  window.scrollTo(0, 0)
-})
+router.afterEach((to) => {
+  window.scrollTo(0, 0);
+});
 
-export default router
+export default router;

@@ -122,7 +122,7 @@ export default {
     toProductDetail(productId) {
       this.$router.push({
         name: 'ProductDetail',
-        params: {
+        query: {
           productId: productId
         }
       });
