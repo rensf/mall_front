@@ -18,9 +18,7 @@ export default {
   props: {
     size: {
       type: Array,
-      default: () => {
-        return ['S', 'M', 'L', 'XL', 'XXL'];
-      },
+      default: () => [],
     },
   },
   data() {

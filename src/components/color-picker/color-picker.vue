@@ -17,9 +17,7 @@ export default {
   props: {
     colors: {
       type: Array,
-      default: () => {
-        return ['#f7d400', '#cc4aca', '#ef6e6e'];
-      },
+      default: () => [],
     },
   },
   data() {
@@ -45,7 +43,7 @@ export default {
     width: 25px;
     height: 25px;
     background-color: #f8f8f8;
-    border: 2px solid transparent;
+    border: 2px solid #dcdee2;
     margin-right: 10px;
     text-align: center;
     font-size: 10px;

@@ -18,26 +18,22 @@
             </span>
           </div>
           <hr />
-          <div class="product-detail-info-box">
-            <span><strong>Materials</strong></span>
-            <span>Wood, Leather, Acrylic</span>
+          <div v-for="(item, index) in productDetail.productAttrs" :key="index">
+            <div class="product-detail-info-box">
+              <span><strong>{{ item.productAttrName }}</strong></span>
+              <span v-if="item.widget === 1">
+                <b-radio-group :options="item.productAttrValues">
+                </b-radio-group>
+              </span>
+              <span v-if="item.widget === 2">
+                <color-picker :colors="item.productAttrValues"></color-picker>
+              </span>
+              <span v-if="item.widget === 3">
+                <size-picker :size="item.productAttrValues"></size-picker>
+              </span>        
+            </div>
+            <hr />
           </div>
-          <hr />
-          <div class="product-detail-info-box">
-            <span><strong>Model</strong></span>
-            <span>{{ productDetail.productModel }}</span>
-          </div>
-          <hr />
-          <div class="product-detail-info-box">
-            <span><strong>Available Colors</strong></span>
-            <color-picker></color-picker>
-          </div>
-          <hr />
-          <div class="product-detail-info-box">
-            <span><strong>Choose Size</strong></span>
-            <size-picker></size-picker>
-          </div>
-          <hr />
           <div class="product-detail-info-box">
             <span><strong>Quantity</strong></span>
             <span>
@@ -64,7 +60,10 @@
             img-width="500"
             img-height="500"
           >
-            <b-carousel-slide v-for="(item, index) in imageList" :key="index">
+            <b-carousel-slide
+              v-for="(item, index) in productDetail.images"
+              :key="index"
+            >
               <template #img>
                 <auth-img
                   class="product-detail-img"
@@ -93,7 +92,6 @@ export default {
   data() {
     return {
       productDetail: {},
-      imageList: [],
     };
   },
   created() {
@@ -105,7 +103,6 @@ export default {
         productId: this.$route.query.productId,
       }).then((res) => {
         this.productDetail = res.data.result;
-        this.imageList = res.data.result.image.split(',');
       });
     },
     addOrder() {

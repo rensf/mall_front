@@ -15,7 +15,7 @@
               </div>
               <auth-img
                 :authSrc="
-                  '/api/product/product/viewProductImage/' + item.homeImage
+                  '/api/product/product/viewProductImage/' + item.homeImages[0]
                 "
               ></auth-img>
               <b-card-title>{{ item.productName }}</b-card-title>
