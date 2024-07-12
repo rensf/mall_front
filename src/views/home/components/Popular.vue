@@ -74,7 +74,7 @@ export default {
     addCart(item) {
       let addCartForm = {
         productId: item.productId,
-        userId: this.$store.state.user.userId,
+        userId: this.$store.state.user.userInfo.userId,
       };
       this.$postRequest('/user/cart/addCart', addCartForm).then((res) => {
         if (res.data.result) {

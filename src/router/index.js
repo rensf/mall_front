@@ -26,7 +26,9 @@ router.beforeEach((to, from, next) => {
       name: homeName,
     });
   } else if (token && to.name !== loginName) {
-    store.dispatch('getUserInfo');
+    if (!store.state.user.hasGetUserInfo) {
+      store.dispatch('getUserInfo');
+    }
     next();
   }
 });
