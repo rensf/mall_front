@@ -9,23 +9,54 @@
             <b-row>
               <b-col cols="6" class="order-info">
                 <strong>Order No.</strong>
-                <div>123456789</div>
+                <div>{{ orderInfo.orderId }}</div>
               </b-col>
               <b-col cols="6" class="order-info">
-                <strong>Transaction ID</strong>
-                <div>8*********6</div>
-              </b-col>
-              <b-col cols="6" class="order-info">
-                <strong>Order Date</strong>
+                <strong>Order Time</strong>
                 <div>
-                  2023/12/31
+                  {{ orderInfo.orderTime }}
                 </div>
               </b-col>
               <b-col cols="6" class="order-info">
-                <strong>Arrival Date</strong>
-                <div>2024/01/01</div>
+                <strong>Estimated Arrival Date</strong>
+                <div>{{ orderInfo.esArrivalDate }}</div>
               </b-col>
             </b-row>
+          </div>
+        </b-col>
+        <b-col cols="4">
+          <div class="order-block">
+            <h4>Shipping Info</h4>
+            <hr />
+            <b-row>
+              <b-col cols="6" class="order-info">
+                <strong>Name</strong>
+                <div>{{ addressInfo.concatName }}</div>
+              </b-col>
+              <b-col cols="6" class="order-info">
+                <strong>Tel</strong>
+                <div>{{ addressInfo.concatTel }}</div>
+              </b-col>
+              <b-col cols="6" class="order-info">
+                <strong>City</strong>
+                <div>
+                  {{ addressInfo.province }} {{ addressInfo.city }} {{ addressInfo.county }}
+                </div>
+              </b-col>
+              <b-col cols="6" class="order-info">
+                <strong>Address</strong>
+                <div>西潞苑小区**楼**单元**室</div>
+              </b-col>
+            </b-row>
+          </div>
+        </b-col>
+      </b-row>
+      <b-row align-h="center">
+        <b-col cols="4">
+          <div class="order-block">
+            <h4>Discount Way</h4>
+            <hr />
+            <b-row> </b-row>
           </div>
         </b-col>
         <b-col cols="4">
@@ -42,10 +73,7 @@
                 />
                 <label for="paymentID1">
                   <strong>Pay via credit cart</strong> <br />
-                  <small
-                    >(MasterCard, Maestro, Visa, Visa Electron, JCB and American
-                    Express)</small
-                  >
+                  <small>(MasterCard, Maestro, Visa, Visa Electron, JCB and American Express)</small>
                 </label>
               </span>
               <span class="checkbox">
@@ -60,41 +88,6 @@
                 </label>
               </span>
             </b-row>
-          </div>
-        </b-col>
-      </b-row>
-      <b-row align-h="center">
-        <b-col cols="4">
-          <div class="order-block">
-            <h4>Shipping Info</h4>
-            <hr />
-            <b-row>
-              <b-col cols="6" class="order-info">
-                <strong>Name</strong>
-                <div>姓名</div>
-              </b-col>
-              <b-col cols="6" class="order-info">
-                <strong>Tel</strong>
-                <div>1*********9</div>
-              </b-col>
-              <b-col cols="6" class="order-info">
-                <strong>City</strong>
-                <div>
-                  北京市 通州区 永顺镇
-                </div>
-              </b-col>
-              <b-col cols="6" class="order-info">
-                <strong>Address</strong>
-                <div>西潞苑小区**楼**单元**室</div>
-              </b-col>
-            </b-row>
-          </div>
-        </b-col>
-        <b-col cols="4">
-          <div class="order-block">
-            <h4>Discount Way</h4>
-            <hr />
-            <b-row> </b-row>
           </div>
         </b-col>
       </b-row>
@@ -140,15 +133,18 @@
 <script>
 export default {
   name: 'Order',
-  created() {
-    this.addOrder();
+  data() {
+    return {
+      orderInfo: {},
+      addressInfo: {},
+    };
+  },
+  mounted() {
+    this.orderInfo = this.$store.state.user.orderInfo;
+    this.addressInfo = this.$store.state.user.userInfo.addresses[0];
   },
   methods: {
-    addOrder() {
-      this.$getRequest('/order/order/addOrder').then((res) => {
-        console.log(res);
-      });
-    },
+    
   },
 };
 </script>

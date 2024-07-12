@@ -106,7 +106,12 @@ export default {
       });
     },
     addOrder() {
-      this.$router.push('./order');
+      this.$postRequest('/order/order/addOrder').then((res) => {
+        this.$store.commit('setOrderInfo', res.data.result);
+        this.$router.push({
+          name: 'Order',
+        });
+      });
     },
   },
 };
