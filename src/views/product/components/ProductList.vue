@@ -32,7 +32,7 @@
                           class="card-img"
                           :authSrc="
                             '/api/product/product/viewProductImage/' +
-                              item.images[0]
+                              item.imageList[0]
                           "
                         ></auth-img>
                       </b-col>
