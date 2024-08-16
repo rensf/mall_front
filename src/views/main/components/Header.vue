@@ -3,14 +3,7 @@
     <b-navbar-brand><h2 @click="$router.push('/home')">Mall</h2></b-navbar-brand>
     <b-navbar-nav class="ml-auto">
       <b-nav-item>
-        <b-icon
-          v-if="isLogin"
-          class="navbar-icon"
-          title="购物车"
-          right
-          icon="cart-fill"
-          font-scale="2"
-        ></b-icon>
+        <home-cart class="navbar-icon" v-if="isLogin"></home-cart>
       </b-nav-item>
       <b-nav-item>
         <b-icon
@@ -49,8 +42,12 @@
 </template>
 
 <script>
+import HomeCart from './Cart';
 export default {
   name: 'HomeHeader',
+  components: {
+    HomeCart,
+  },
   computed: {
     isLogin() {
       return this.$store.state.user.token ? true : false;

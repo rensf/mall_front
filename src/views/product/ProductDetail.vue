@@ -22,14 +22,14 @@
             <div class="product-detail-info-box">
               <span><strong>{{ item.productAttrName }}</strong></span>
               <span v-if="item.widget === 1">
-                <b-radio-group :options="item.productAttrValues">
+                <b-radio-group :options="item.productAttrValueList">
                 </b-radio-group>
               </span>
               <span v-if="item.widget === 2">
-                <color-picker :colors="item.productAttrValues"></color-picker>
+                <color-picker :colors="item.productAttrValueList"></color-picker>
               </span>
               <span v-if="item.widget === 3">
-                <size-picker :size="item.productAttrValues"></size-picker>
+                <size-picker :size="item.productAttrValueList"></size-picker>
               </span>        
             </div>
             <hr />

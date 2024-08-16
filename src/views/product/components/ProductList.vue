@@ -9,7 +9,7 @@
           <b-col cols="9">
             <div style="line-height: 38px;">
               <strong>{{ queryForm.total }}</strong> items
-              <b-dropdown class="sort-btn" text="Sort By" size="sm" right>
+              <b-dropdown class="sort-btn" text="Sort By" right>
                 <b-dropdown-item>名称</b-dropdown-item>
               </b-dropdown>
             </div>
@@ -32,7 +32,7 @@
                           class="card-img"
                           :authSrc="
                             '/api/product/product/viewProductImage/' +
-                              item.images[0]
+                              item.imageList[0]
                           "
                         ></auth-img>
                       </b-col>
