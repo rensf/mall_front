@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import config from '@/config'
-import { postRequest, putRequest, getRequest } from '@/api'
+import { postRequest, putRequest, deleteRequest, getRequest } from '@/api'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -24,6 +24,7 @@ Vue.prototype.$config = config
  */
 Vue.prototype.$postRequest = postRequest
 Vue.prototype.$putRequest = putRequest
+Vue.prototype.$deleteRequest = deleteRequest
 Vue.prototype.$getRequest = getRequest
 
 new Vue({
