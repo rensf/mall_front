@@ -1,70 +1,82 @@
 <template>
   <a-col class="login-form" cols="12">
-    <a-form-item>
-      <a-input type="text" placeholder="请输入账号/手机号/邮箱" v-model="loginForm.username"></a-input>
-    </a-form-item>
-    <a-form-item>
-      <a-input type="password" placeholder="请输入密码" v-model="loginForm.password"></a-input>
-    </a-form-item>
-    <a-form-item>
-      <a-form-checkbox> 记住我&nbsp;<a href="#">忘记密码？</a> </a-form-checkbox>
-    </a-form-item>
-    <hr />
-    <a-button type="primary" :disabled="!(nameState && passState)" @click="login">
-      登录
-    </a-button>
+    <a-form layout="inline" :form="form" @submit="handleSubmit">
+      <a-form-item :validate-status="userNameError() ? 'error' : ''" :help="userNameError() || ''">
+        <a-input v-decorator="[
+          'userName',
+          { rules: [{ required: true, message: '请输入账号/手机号/邮箱' }] },
+        ]" placeholder="账号/手机号/邮箱">
+          <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
+        </a-input>
+      </a-form-item>
+      <a-form-item :validate-status="passwordError() ? 'error' : ''" :help="passwordError() || ''">
+        <a-input v-decorator="[
+          'password',
+          { rules: [{ required: true, message: '请输入密码' }] },
+        ]" type="password" placeholder="密码">
+          <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+        </a-input>
+      </a-form-item>
+      <a-form-item>
+        <a-form-item>
+          <a-form-checkbox> 记住我&nbsp;<a href="#">忘记密码？</a> </a-form-checkbox>
+        </a-form-item>
+        <hr />
+        <a-button type="primary" html-type="submit" :disabled="hasErrors(form.getFieldsError())">
+          登录
+        </a-button>
+      </a-form-item>
+    </a-form>
   </a-col>
 </template>
 
 <script>
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
 export default {
   name: 'LoginNormal',
   data() {
     return {
-      loginForm: {
-        grant_type: 'sys_password',
-      },
-      nameState: null,
-      passState: null,
+      hasErrors,
+      form: this.$form.createForm(this, { name: 'horizontal_login' }),
     };
   },
-  computed: {
-    invalidNameFeedback() {
-      if (this.loginForm.username === '') {
-        return '账号/手机号/邮箱不能为空';
-      }
-    },
-    invalidPassFeedback() {
-      if (this.loginForm.password === '') {
-        return '密码不能为空';
-      }
-    },
-  },
-  watch: {
-    loginForm: {
-      deep: true,
-      handler(val, oldVal) {
-        if (val.username !== undefined) {
-          this.nameState = val.username ? true : false;
-        }
-        if (val.password !== undefined) {
-          this.passState = val.password ? true : false;
-        }
-      },
-    },
+  mounted() {
+    this.$nextTick(() => {
+      // To disabled submit button at the beginning.
+      this.form.validateFields();
+    });
   },
   methods: {
-    login() {
-      if (this.nameState && this.passState) {
-        this.$postRequest('/auth/oauth/token', this.loginForm).then((res) => {
-          let data = res.data.result;
-          this.$message.success(`登录成功`, 2);
-          this.$store.dispatch('handleLogin', data);
-          this.$router.push({
-            name: this.$config.homeName,
+    // Only show error after a field is touched.
+    userNameError() {
+      const { getFieldError, isFieldTouched } = this.form;
+      return isFieldTouched('userName') && getFieldError('userName');
+    },
+    // Only show error after a field is touched.
+    passwordError() {
+      const { getFieldError, isFieldTouched } = this.form;
+      return isFieldTouched('password') && getFieldError('password');
+    },
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          this.$postRequest('/auth/oauth/token', {
+            grant_type: 'sys_password',
+            username: values.userName,
+            password: values.password,
+          }).then((res) => {
+            let data = res.data.result;
+            this.$message.success(`登录成功`, 2);
+            this.$store.dispatch('handleLogin', data);
+            this.$router.push({
+              name: this.$config.homeName,
+            });
           });
-        });
-      }
+        }
+      });
     },
   },
 };
