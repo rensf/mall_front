@@ -1,39 +1,34 @@
 <template>
-  <b-col class="register-form" cols="12">
-    <b-form-group :invalid-feedback="invalidPhoneFeedback">
-      <b-form-input placeholder="请输入手机号"></b-form-input>
-    </b-form-group>
-    <b-form-group>
-      <b-form-input placeholder="请输入邮箱"></b-form-input>
-    </b-form-group>
-    <b-form-group>
-      <b-form-input placeholder="请输入密码"></b-form-input>
-    </b-form-group>
+  <a-col class="register-form" cols="12">
+    <a-form-item :invalid-feedback="invalidPhoneFeedback">
+      <a-input placeholder="请输入手机号"></a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input placeholder="请输入邮箱"></a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input placeholder="请输入密码"></a-input>
+    </a-form-item>
     <hr />
-    <b-button variant="primary">登录/注册</b-button>
-  </b-col>
+    <a-button variant="primary">登录/注册</a-button>
+  </a-col>
 </template>
 
 <script>
 export default {
-  name: "Register",
+  name: 'Register',
   data() {
     return {
-      registerForm: {
-        
-      }
-    }
+      registerForm: {},
+    };
   },
   computed: {
-    invalidPhoneFeedback() {}
+    invalidPhoneFeedback() {},
   },
   methods: {
-    register() {
-
-    }
-  }
+    register() {},
+  },
 };
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

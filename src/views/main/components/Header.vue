@@ -1,44 +1,13 @@
 <template>
-  <b-navbar>
-    <b-navbar-brand><h2 @click="$router.push('/home')">Mall</h2></b-navbar-brand>
-    <b-navbar-nav class="ml-auto">
-      <b-nav-item>
-        <home-cart class="navbar-icon" v-if="isLogin"></home-cart>
-      </b-nav-item>
-      <b-nav-item>
-        <b-icon
-          v-if="isLogin"
-          class="navbar-icon"
-          title="个人信息"
-          right
-          icon="person-fill"
-          font-scale="2"
-        ></b-icon>
-      </b-nav-item>
-      <b-nav-item>
-        <b-icon
-          v-if="isLogin"
-          class="navbar-icon"
-          title="注销"
-          right
-          icon="arrow-right-square-fill"
-          font-scale="2"
-          @click="logout"
-        ></b-icon>
-      </b-nav-item>
-      <b-nav-item>
-        <b-icon
-          v-if="!isLogin"
-          class="navbar-icon"
-          title="登录"
-          right
-          icon="arrow-left-square-fill"
-          font-scale="2"
-          @click="$router.push('/login')"
-        ></b-icon>
-      </b-nav-item>
-    </b-navbar-nav>
-  </b-navbar>
+  <a-row type="flex">
+    <a-col><h2 @click="$router.push('/home')">Mall</h2></a-col>
+    <a-col>
+      <home-cart class="navbar-icon" v-if="isLogin"></home-cart>
+      <a-icon v-if="isLogin" class="navbar-icon" title="个人信息" right icon="person-fill" font-scale="2"></a-icon>
+      <a-icon v-if="isLogin" class="navbar-icon" title="注销" right icon="arrow-right-square-fill" font-scale="2" @click="logout"></a-icon>
+      <a-icon v-if="!isLogin" class="navbar-icon" title="登录" right icon="arrow-left-square-fill" font-scale="2" @click="$router.push('/login')"></a-icon>
+    </a-col>
+  </a-row>
 </template>
 
 <script>

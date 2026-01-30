@@ -1,12 +1,12 @@
 <template>
-  <b-col class="login-form" cols="12">
+  <a-col class="login-form" cols="12">
     <span>扫码登录</span>
     <div>
       <img :src="qrUrl" />
     </div>
     <hr />
-    <b-button @click="refreshQrcode">刷新</b-button>
-  </b-col>
+    <a-button @click="refreshQrcode">刷新</a-button>
+  </a-col>
 </template>
 
 <script>

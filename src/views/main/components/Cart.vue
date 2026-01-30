@@ -1,8 +1,8 @@
 <template>
   <div class="cart">
-    <b-dropdown class="cart-icon" variant="link" right no-caret>
+    <!-- <b-dropdown class="cart-icon" variant="link" right no-caret :auto-close="false">
       <template #button-content>
-        <b-icon title="购物车" icon="cart-fill" font-scale="2"></b-icon>
+        <a-icon title="购物车" icon="cart-fill" font-scale="2" @click="queryCartProductList"></a-icon>
       </template>
       <span v-for="item in data">
         <b-dropdown-item>
@@ -12,19 +12,21 @@
             </div>
             <div class="cart-item-body">
               <div class="cart-item-name">{{ item.productName }}</div>
-              <div>$15.0<span> x 3</span></div>
+              <div>
+                {{ item.productPrice }}<span> x {{ item.nums }}</span>
+              </div>
             </div>
             <div class="cart-item-right">
-              <i class="fa fa-remove"></i>
+              <b-icon icon="x"></b-icon>
             </div>
           </div>
         </b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
       </span>
       <b-dropdown-item>
-        <b-button>check out</b-button>
+        <b-button>结算</b-button>
       </b-dropdown-item>
-    </b-dropdown>
+    </b-dropdown> -->
   </div>
 </template>
 
@@ -38,17 +40,16 @@ export default {
   data() {
     return {
       data: [],
-      isHovered: false,
     };
-  },
-  created() {
-    this.queryCartProductList();
   },
   methods: {
     queryCartProductList() {
       this.$getRequest('/user/cart/queryCartProductList').then((res) => {
         this.data = res.data.result;
       });
+    },
+    deleteCartProduct(productId) {
+
     },
   },
 };

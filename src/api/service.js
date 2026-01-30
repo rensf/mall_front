@@ -29,11 +29,7 @@ service.interceptors.response.use(
     } else {
       const vm = new Vue();
       let msg = response.msg;
-      vm.$bvToast.toast(`${msg}`, {
-        title: '提示',
-        variant: 'danger',
-        autoHideDelay: 3000,
-      });
+      vm.$message.error(`${msg}`, 2);
     }
   },
   (error) => {
@@ -41,11 +37,7 @@ service.interceptors.response.use(
     if (res && res.code && res.code === '10002') {
       const vm = new Vue();
       let msg = res.msg;
-      vm.$bvToast.toast(`${msg}`, {
-        title: '提示',
-        variant: 'danger',
-        autoHideDelay: 3000,
-      });
+      vm.$message.error(`${msg}`, 2);
       store.commit('removeToken');
       router.push({
         name: loginName,

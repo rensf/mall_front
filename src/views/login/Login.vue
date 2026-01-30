@@ -1,44 +1,44 @@
 <template>
-  <b-container class="login">
+  <div class="login">
     <div class="login-img">
       <img src="@/assets/login.jpg" />
     </div>
     <div class="login-block" v-show="isLogin" :class="showLogin">
-      <b-row>
-        <b-col cols="12">
+      <a-row>
+        <a-col cols="12">
           <div class="h4">
             登录
-            <span class="btn btn-main" @click="isLogin=!isLogin">创建账号</span>
+            <span class="btn btn-main" @click="isLogin = !isLogin">创建账号</span>
           </div>
           <hr />
-        </b-col>
+        </a-col>
         <login-normal v-if="isNormal"></login-normal>
         <login-qrcode v-if="!isNormal"></login-qrcode>
-      </b-row>
-      <div class="login-switch" @click="isNormal=!isNormal">
+      </a-row>
+      <div class="login-switch" @click="isNormal = !isNormal">
         <img v-if="!isNormal" src="@/assets/computer.png" />
         <img v-if="isNormal" src="@/assets/qrcode.png" />
       </div>
     </div>
     <div class="register-block" v-show="!isLogin" :class="showRegister">
-      <b-row>
-        <b-col cols="12">
+      <a-row>
+        <a-col cols="12">
           <div class="h4">
             注册
-            <span class="btn btn-main" @click="isLogin=!isLogin">返回登录</span>
+            <span class="btn btn-main" @click="isLogin = !isLogin">返回登录</span>
           </div>
           <hr />
-        </b-col>
+        </a-col>
         <register></register>
-      </b-row>
+      </a-row>
     </div>
-  </b-container>
+  </div>
 </template>
 
 <script>
-import LoginNormal from "./components/LoginNormal";
-import LoginQrcode from "./components/LoginQrcode";
-import Register from "./components/Register";
+import LoginNormal from './components/LoginNormal';
+import LoginQrcode from './components/LoginQrcode';
+import Register from './components/Register';
 
 export default {
   components: {
@@ -53,13 +53,13 @@ export default {
     };
   },
   computed: {
-    showLogin: function () {
+    showLogin: function() {
       return {
         animate__animated: this.isLogin,
         animate__fadeInDown: this.isLogin,
       };
     },
-    showRegister: function () {
+    showRegister: function() {
       return {
         animate__animated: !this.isLogin,
         animate__fadeInDown: !this.isLogin,
@@ -79,6 +79,17 @@ export default {
   transform: translate(-50%, -50%);
   display: flex;
   padding: 0;
+  width: 1000px;
+
+  .login-img {
+    min-width: 640px;
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      opacity: 0.9;
+    }
+  }
 
   .login-block,
   .register-block {
@@ -102,7 +113,7 @@ export default {
     }
 
     .btn-main:after {
-      content: "";
+      content: '';
       width: 0;
       height: 1px;
       position: absolute;

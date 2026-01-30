@@ -1,35 +1,19 @@
 <template>
-  <b-col class="login-form" cols="12">
-    <b-form-group :invalid-feedback="invalidNameFeedback" :state="nameState">
-      <b-form-input
-        type="text"
-        placeholder="请输入账号/手机号/邮箱"
-        v-model="loginForm.username"
-        :state="nameState"
-      ></b-form-input>
-    </b-form-group>
-    <b-form-group :invalid-feedback="invalidPassFeedback" :state="passState">
-      <b-form-input
-        type="password"
-        placeholder="请输入密码"
-        v-model="loginForm.password"
-        :state="passState"
-      ></b-form-input>
-    </b-form-group>
-    <b-form-group>
-      <b-form-checkbox>
-        记住我&nbsp;<a href="#">忘记密码？</a>
-      </b-form-checkbox>
-    </b-form-group>
+  <a-col class="login-form" cols="12">
+    <a-form-item>
+      <a-input type="text" placeholder="请输入账号/手机号/邮箱" v-model="loginForm.username"></a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-input type="password" placeholder="请输入密码" v-model="loginForm.password"></a-input>
+    </a-form-item>
+    <a-form-item>
+      <a-form-checkbox> 记住我&nbsp;<a href="#">忘记密码？</a> </a-form-checkbox>
+    </a-form-item>
     <hr />
-    <b-button
-      variant="primary"
-      :disabled="!(nameState && passState)"
-      @click="login"
-    >
+    <a-button type="primary" :disabled="!(nameState && passState)" @click="login">
       登录
-    </b-button>
-  </b-col>
+    </a-button>
+  </a-col>
 </template>
 
 <script>
@@ -74,11 +58,7 @@ export default {
       if (this.nameState && this.passState) {
         this.$postRequest('/auth/oauth/token', this.loginForm).then((res) => {
           let data = res.data.result;
-          this.$bvToast.toast(`登录成功`, {
-            title: '提示',
-            variant: 'success',
-            autoHideDelay: 3000,
-          });
+          this.$message.success(`登录成功`, 2);
           this.$store.dispatch('handleLogin', data);
           this.$router.push({
             name: this.$config.homeName,
