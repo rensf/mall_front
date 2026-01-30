@@ -28,7 +28,7 @@
                   <sup>$ {{ item.productPrice }}</sup>
                 </div>
               </b-card-sub-title>
-              <b-button @click="addCart(item)"
+              <b-button @click="addCartProduct(item)"
                 ><b-icon icon="cart3"></b-icon
               ></b-button>
             </b-card>
@@ -71,12 +71,12 @@ export default {
       });
     },
     // 添加购物车
-    addCart(item) {
-      let addCartForm = {
+    addCartProduct(item) {
+      let addCartProductForm = {
         productId: item.productId,
         userId: this.$store.state.user.userInfo.userId,
       };
-      this.$postRequest('/user/cart/addCart', addCartForm).then((res) => {
+      this.$postRequest('/user/cart/addCartProduct', addCartProductForm).then((res) => {
         if (res.data.result) {
           this.$bvToast.toast(item.productName + `已成功添加至购物车`, {
             title: '提示',

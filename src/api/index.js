@@ -16,6 +16,14 @@ export const putRequest = (url, params) => {
   })
 }
 
+export const deleteRequest = (url, params) => {
+  return service({
+    method: 'delete',
+    url: '/api' + `${url}`,
+    data: params,
+  })
+}
+
 export const getRequest = (url, params) => {
   return service({
     method: 'get',

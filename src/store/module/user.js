@@ -43,6 +43,8 @@ export default {
     },
     handleLogout(context) {
       context.commit('removeToken');
+      context.commit('setUserInfo', "");
+      context.commit('setHasGetUserInfo', false);
     },
   },
   modules: {},

@@ -48,8 +48,8 @@
           </div>
           <hr />
           <div class="product-detail-info-box">
-            <b-button variant="danger" @click="addOrder">Buy Now</b-button>
-            <b-button variant="warning">Add Cart</b-button>
+            <b-button variant="danger" @click="addOrder">立即购买</b-button>
+            <b-button variant="warning">加入购物车</b-button>
           </div>
         </b-col>
         <b-col cols="5">
